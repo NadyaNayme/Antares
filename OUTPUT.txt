@@ -17,7 +17,7 @@ datasource: {
 	],
 	where: [
 	  { name: 'a1.[AwardImage]', match: 'IS NOT', value: 'NULL' },
-	  { name: 'a1.[Active]', match: 'EQUALS', value: '@Active' },
+	  { name: 'a1.[Active]', match: 'IN', value: '(52, 56)' },
 	  { name: 'a1.[ProjectID]', match: 'EQUALS', value: '@ProjectID' }
 	],
 	orderby: 'a1.[ASeq]'
