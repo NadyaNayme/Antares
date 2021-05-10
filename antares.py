@@ -110,7 +110,7 @@ else:
 # Parse JOIN where the first index is the type, the third index is the database, the fifth index is an alias if it exists
 # Otherwise the fifth index is ID1 and the seventh index is ID2
 check_join_clauses = [i for i, val in enumerate(
-    join_clauses) if val != [] and val == [0] or val == [1]]
+    join_clauses) if val != [] and val == [0] or val == [1] or val == [2]]
 for indice in check_join_clauses:
     if parsed_sql[indice].__len__() == 10:
         new_join = {'type': ' '.join(map(str, parsed_sql[indice][0:2])), 'db': parsed_sql[indice][3],

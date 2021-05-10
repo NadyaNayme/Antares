@@ -1,7 +1,7 @@
-SELECT TOP 9 a1.[AwardID], a1.[AwardURL], a1.[AwardName], a1.[AwardImage]
-FROM Systems.dbo.Awards AS a1
-CROSS APPLY (SELECT TOP 1 CategoryID FROM Systems.dbo.Awards_AwardCategories WHERE ProjectID = a1.ProjectID AND AwardID = a1.AwardID AND CategoryID = @CategoryID_REL1) AS rel1
-WHERE a1.[AwardImage] IS NOT NULL
-AND a1.[Active] IN (52, 56)
-AND a1.[ProjectID] = @ProjectID
-ORDER BY a1.[ASeq]
+SELECT TOP 150 *
+FROM Systems.dbo.Test as t
+INNER JOIN Systems.dbo.Example AS e ON ID1 = ID2
+LEFT OUTER JOIN Systems.dbo.ExampleTwo AS e2 ON ID13 = ID14
+WHERE ScorpionID = 15
+AND DateAdded <> 'Yesterday'
+ORDER BY FirstName ASC, LastName ASC
