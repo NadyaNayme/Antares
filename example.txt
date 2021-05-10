@@ -1,0 +1,9 @@
+SELECT TOP 15 FirstName, LastName, STUFF()
+FROM Systems.dbo.Test as t
+INNER JOIN Systems.dbo.Example AS e ON ID1 = ID2
+LEFT INNER JOIN Systems.dbo.Example AS e2 ON ID13 = ID14
+CROSS APPLY Systems.dbo.Cross AS ca ( SELECT TOP 5 * FROM Systems.dbo.CrossApplies )
+OUTER APPLY Systems.dbo.Outer AS oa ( SELECT TOP 2 * FROM Systems.dbo.OuterApplies )
+WHERE ScorpionID = 15
+AND DateAdded <> 'Yesterday'
+ORDER BY FirstName ASC, LastName ASC

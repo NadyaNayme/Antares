@@ -1,0 +1,24 @@
+datasource: {
+	select: 'a1.[AwardID], a1.[AwardURL], a1.[AwardName], a1.[AwardImage]',
+	top: 9
+	from: 'Systems.dbo.Awards',
+	alias: 'a1',
+	join: [
+	
+	],
+	apply: [
+	  {
+		type: 'CROSS',
+		to: '
+		  (SELECT TOP 1 CategoryID FROM Systems.dbo.Awards_AwardCategories WHERE ProjectID = a1.ProjectID AND AwardID = a1.AwardID AND CategoryID = @CategoryID_REL1)
+		',
+		alias: 'rel1',
+	  }
+	],
+	where: [
+	  { name: 'a1.[AwardImage]', match: 'IS NOT', value: 'NULL' },
+	  { name: 'a1.[Active]', match: 'EQUALS', value: '@Active' },
+	  { name: 'a1.[ProjectID]', match: 'EQUALS', value: '@ProjectID' }
+	],
+	orderby: 'a1.[ASeq]'
+}

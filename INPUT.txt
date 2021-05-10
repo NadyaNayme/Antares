@@ -1,0 +1,7 @@
+SELECT TOP 9 a1.[AwardID], a1.[AwardURL], a1.[AwardName], a1.[AwardImage]
+FROM Systems.dbo.Awards AS a1
+CROSS APPLY (SELECT TOP 1 CategoryID FROM Systems.dbo.Awards_AwardCategories WHERE ProjectID = a1.ProjectID AND AwardID = a1.AwardID AND CategoryID = @CategoryID_REL1) AS rel1
+WHERE a1.[AwardImage] IS NOT NULL
+AND a1.[Active] = @Active
+AND a1.[ProjectID] = @ProjectID
+ORDER BY a1.[ASeq]
