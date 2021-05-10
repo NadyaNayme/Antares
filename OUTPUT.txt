@@ -21,7 +21,8 @@ datasource: {
 	
 	],
 	where: [
-	  { name: 'ScorpionID', match: 'EQUALS', value: '15' }
+	  { name: 'ScorpionID', match: 'EQUALS', value: '15' },
+	  { name: 'DateAdded', match: '{NE}', value: 'Yesterday' }
 	],
 	orderby: 'FirstName ASC, LastName ASC'
 }

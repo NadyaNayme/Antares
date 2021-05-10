@@ -143,7 +143,7 @@ for indice in check_apply_clauses:
 check_where_clauses = [i for i, val in enumerate(
     where_clauses) if val != [] and val == [0]]
 for indice in check_where_clauses:
-    if parsed_sql[indice][2] == "=":
+    if parsed_sql[indice][2] != "IS" and parsed_sql[indice][2] != "IN":
         new_where = {'name': parsed_sql[indice][1], 'match_type': match_dict(
             parsed_sql[indice][2]), 'value': parsed_sql[indice][3]}
         where.append(new_where)
