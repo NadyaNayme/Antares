@@ -17,9 +17,6 @@ datasource: {
 		on: [{ id1: 'ID13', id2: 'ID14' }]
 	  }
 	],
-	apply: [
-	
-	],
 	where: [
 	  { name: 'ScorpionID', match: 'EQUALS', value: '15' },
 	  { name: 'DateAdded', match: '{NE}', value: 'Yesterday' }

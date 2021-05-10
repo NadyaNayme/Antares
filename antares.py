@@ -217,7 +217,21 @@ if where.__len__() > 0:
 coral_sql = 'datasource: {{\n\t{sline}\n\t{tline}\n\t{fline}\n\tjoin: [\n\t{jlines}\n\t],\n\tapply: [\n\t{alines}\n\t],\n\twhere: [\n\t{wlines}\n\t],\n\torderby: \'{oby}\'\n}}'.format(
     sline=select_line, tline=top_line, fline=from_line, jlines=',\n\t'.join(map(str, join_lines)), alines=',\n\t'.join(map(str, apply_lines)), wlines=',\n\t'.join(map(str, where_lines)), oby=' '.join(map(str, orderby)))
 
+ternary_sline = "\n\t{sline}".format(sline=select_line)
+ternary_tline = "\n\t{tline}".format(tline=top_line)
+ternary_fline = "\n\t{fline}".format(fline=from_line)
+ternary_jlines = "\n\tjoin: [\n\t{jlines}\n\t],".format(
+    jlines=',\n\t'.join(map(str, join_lines)))
+ternary_alines = "\n\tapply: [\n\t{alines}\n\t],".format(
+    alines=',\n\t'.join(map(str, apply_lines)))
+ternary_wlines = "\n\twhere: [\n\t{wlines}\n\t],".format(
+    wlines=',\n\t'.join(map(str, where_lines)))
+ternary_oby = "\n\torderby: \'{oby}\'".format(oby=' '.join(map(str, orderby)))
+
+ternary_coral_sql = 'datasource: {{{tsline}{ttline}{tfline}{tjlines}{talines}{twlines}{toby}\n}}'.format(
+    tsline=ternary_sline if ternary_sline else "", ttline=ternary_tline if ternary_tline else "", tfline=ternary_fline if ternary_fline else "", tjlines=ternary_jlines if join_lines else "", talines=ternary_alines if apply_lines else "", twlines=ternary_wlines if where_lines else "", toby=ternary_oby if orderby_indices else "")
+
 # Write that monstrosity that is coral_sql into an output file for people to copy from
 # Eventually I should rewrite it with conditional f-strings
 with open(output_file, 'w') as out_file:
-    out_file.write(coral_sql)
+    out_file.write(ternary_coral_sql)
