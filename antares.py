@@ -68,25 +68,19 @@ with open(input_file, 'r') as in_file:
         line = line.split()
         parsed_sql.append(line)
 
-# All of these _clauses should be refactored into a function that checks if the indices exists and maps them out
+# All of these _indices and _clauses could probably be refactored enumerating a dict to check for the clauses and appending to the proper list
 join_clauses = []
+apply_clauses = []
+where_clauses = []
+orderby_clauses = []
 for index in parsed_sql:
     join_indices = [n for n, clause in enumerate(index) if clause == 'JOIN']
     join_clauses.append(join_indices)
-
-apply_clauses = []
-for index in parsed_sql:
     apply_indices = [n for n, clause in enumerate(index) if clause == 'APPLY']
     apply_clauses.append(apply_indices)
-
-where_clauses = []
-for index in parsed_sql:
     where_indices = [n for n, clause in enumerate(
         index) if clause == 'WHERE' or clause == 'AND']
     where_clauses.append(where_indices)
-
-orderby_clauses = []
-for index in parsed_sql:
     orderby_indices = [n for n, clause in enumerate(
         index) if clause == 'ORDER']
     orderby_clauses.append(orderby_indices)
@@ -162,7 +156,7 @@ for indice in check_where_clauses:
     else:
         print("Failure to parse WHERE clause correctly")
 
-# Parse ORDER BY clause. Grab all index after the second
+# Parse ORDER BY clause. Grab all indices after the second ("BY")
 check_orderby_clauses = [
     i for i, val in enumerate(orderby_clauses) if val != []]
 for indice in check_orderby_clauses:
@@ -182,7 +176,7 @@ elif db['from']:
     from_line = 'from: \'{database}\','.format(database=db['from'])
 
 # Hacky way of joining all the clauses together. Python's string interpolation sucks compared to Javascript's.
-# TODO: I want to do conditional checks to remove code if the value is None but for now people can add their aliases
+# ALl of the _lines lists should be refactored to be generatd by a function but for now we'll just loop over each item seperately
 join_lines = []
 if join.__len__() > 0:
     for item in join:
@@ -217,6 +211,7 @@ if where.__len__() > 0:
 coral_sql = 'datasource: {{\n\t{sline}\n\t{tline}\n\t{fline}\n\tjoin: [\n\t{jlines}\n\t],\n\tapply: [\n\t{alines}\n\t],\n\twhere: [\n\t{wlines}\n\t],\n\torderby: \'{oby}\'\n}}'.format(
     sline=select_line, tline=top_line, fline=from_line, jlines=',\n\t'.join(map(str, join_lines)), alines=',\n\t'.join(map(str, apply_lines)), wlines=',\n\t'.join(map(str, where_lines)), oby=' '.join(map(str, orderby)))
 
+# Fuck Python ternary string interpolation. Condense the above lines so I can do a quick sanity check for their existence in the ternary_coral_sql format()
 ternary_sline = "\n\t{sline}".format(sline=select_line)
 ternary_tline = "\n\t{tline}".format(tline=top_line)
 ternary_fline = "\n\t{fline}".format(fline=from_line)
@@ -231,7 +226,6 @@ ternary_oby = "\n\torderby: \'{oby}\'".format(oby=' '.join(map(str, orderby)))
 ternary_coral_sql = 'datasource: {{{tsline}{ttline}{tfline}{tjlines}{talines}{twlines}{toby}\n}}'.format(
     tsline=ternary_sline if ternary_sline else "", ttline=ternary_tline if ternary_tline else "", tfline=ternary_fline if ternary_fline else "", tjlines=ternary_jlines if join_lines else "", talines=ternary_alines if apply_lines else "", twlines=ternary_wlines if where_lines else "", toby=ternary_oby if orderby_indices else "")
 
-# Write that monstrosity that is coral_sql into an output file for people to copy from
-# Eventually I should rewrite it with conditional f-strings
+# Write that monstrosity that is the coral sql into an output file for people to copy from
 with open(output_file, 'w') as out_file:
     out_file.write(ternary_coral_sql)
