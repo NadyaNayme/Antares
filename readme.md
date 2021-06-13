@@ -13,7 +13,7 @@ Antares will fail to parse the multi-line select statement and output garbage.
 ```sql
 Select Top 5 a,
        b,
-	   c
+       c
 From Systems.dbo.Example
 ```
 ## Correct
