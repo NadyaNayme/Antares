@@ -1,2 +1,12 @@
-INPUT.txt
-OUTPUT.txt
+__INPUT.txt
+__OUTPUT.txt
+__Readme.txt
+___Readme.txt
+/build
+/build
+/dist
+Antares.zip
+example.txt
+antares.spec
+example.txt
+__pycache__

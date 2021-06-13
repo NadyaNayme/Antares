@@ -14,8 +14,8 @@ import re
 import os
 
 script_dir = os.path.dirname(__file__)
-input_file = os.path.join(script_dir, 'INPUT.txt')
-output_file = os.path.join(script_dir, 'OUTPUT.txt')
+input_file = os.path.join(script_dir, '__INPUT.txt')
+output_file = os.path.join(script_dir, '__OUTPUT.txt')
 
 parsed_sql = []
 
